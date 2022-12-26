@@ -1,5 +1,5 @@
 from pygame import *
-from classes_game import *
+from classes import *
 
 
 def open_level(name):
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     time.set_timer(MYEVENTTYPE, 20)
 
     level_rows = 0
-    level = open_level('game_levels/2_lvl.txt')
+    level = open_level('levels/2_lvl.txt')
 
     hero = Hero(pl_WD + 25, (level_rows - 1) * pl_HG)
     left = right = up = False
@@ -52,20 +52,20 @@ if __name__ == '__main__':
 
     while running:
         for ev in event.get():
-            if ev.type == QUIT:
+            if ev.type == QUIT or (ev.type == KEYDOWN and ev.key == K_ESCAPE):
                 running = False
             if ev.type == KEYDOWN and ev.key == K_a:
                 left = True
             if ev.type == KEYDOWN and ev.key == K_d:
                 right = True
-            if ev.type == KEYDOWN and ev.key == K_w:
+            if ev.type == KEYDOWN and ev.key in [K_w, K_SPACE]:
                 if hero.air and hero.double == 0:
                     hero.double = 1
                 else:
                     up = True
                 if not hero.air:
                     hero.double = 0
-            if ev.type == KEYUP and ev.key == K_w:
+            if ev.type == KEYUP and ev.key in [K_w, K_SPACE]:
                 up = False
             if ev.type == KEYUP and ev.key == K_d:
                 right = False
